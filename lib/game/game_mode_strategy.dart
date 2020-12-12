@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 abstract class GameModeStrategy {
-  String announce(String roast);
+  String getName(BuildContext context);
 }
