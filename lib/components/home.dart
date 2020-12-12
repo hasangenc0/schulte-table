@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:schulte_table/components/schulte_table.dart';
 import 'menu_item.dart';
 
@@ -7,7 +8,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('First Route'),
+          title: Text(AppLocalizations.of(context).homePageTitle),
         ),
         body: Padding(
           padding: EdgeInsets.all(10),
