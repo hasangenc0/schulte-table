@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:schulte_table/components/schulte_table.dart';
 import 'menu_item.dart';
+import '../enums/game_mode.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -17,7 +18,7 @@ class Home extends StatelessWidget {
               Center(
                   child: RichText(
                       text: TextSpan(
-                text: 'Choose one of the games mode to start',
+                text: AppLocalizations.of(context).chooseGameMode,
                 style: new TextStyle(
                   fontSize: 18,
                   color: Colors.white,
@@ -32,21 +33,9 @@ class Home extends StatelessWidget {
                     childAspectRatio: 1.2,
                     crossAxisCount: 2,
                     children: List.generate(6, (index) {
-                      return Container(child: MenuItem());
+                      return Container(child: MenuItem(GameMode.values[index]));
                     }),
-                  )),
-              Container(
-                height: 50,
-                child: ElevatedButton(
-                  child: Text('Open route'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SchulteTable()),
-                    );
-                  },
-                ),
-              )
+                  ))
             ]),
           ),
         ));
