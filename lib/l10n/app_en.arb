@@ -2,5 +2,17 @@
   "homePageTitle": "Schulte Table",
   "@homePageTitle": {
     "description": "homePageTitle"
+  },
+  "chooseGameMode": "Choose one of the games mode to start",
+  "@chooseGameMode": {
+    "description": "chooseGameMode"
+  },
+  "memoryGameModeTitle": "Memory",
+  "@memoryGameModeTitle": {
+    "description": "memory Game Mode Title"
+  },
+  "mode": "Current Mode:",
+  "@mode": {
+    "description": "game mode indicatior"
   }
 }
