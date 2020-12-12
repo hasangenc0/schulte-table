@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:schulte_table/components/home.dart';
+import 'package:schulte_table/components/menu_item.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(
+      title: 'Schulte Table App',
+      theme:
+          ThemeData(brightness: Brightness.dark, primarySwatch: Colors.orange),
+      home: Home()));
 }
 
 class MyApp extends StatelessWidget {
@@ -11,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Schulte Table App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Schulte Table'),
@@ -37,6 +43,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Widget _buildGrid() => GridView.extent(
+      maxCrossAxisExtent: 250,
+      padding: const EdgeInsets.all(4),
+      mainAxisSpacing: 4,
+      crossAxisSpacing: 4,
+      children: _buildGridTileList(6));
+
+  List<Container> _buildGridTileList(int count) =>
+      List.generate(count, (i) => Container(child: MenuItem()));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,21 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Pushed:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            Text(
-              'Times',
-            ),
-          ],
-        ),
+        child: Center(child: _buildGrid()),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
