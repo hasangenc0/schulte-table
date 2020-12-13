@@ -7,7 +7,10 @@ void main() {
   runApp(MaterialApp(
     title: 'Schulte Table App',
     theme: ThemeData(brightness: Brightness.dark, primarySwatch: Colors.orange),
-    home: Home(),
+    initialRoute: '/',
+    routes: {
+      '/': (context) => Home(),
+    },
     localizationsDelegates: [
       AppLocalizations.delegate,
       GlobalMaterialLocalizations.delegate,
