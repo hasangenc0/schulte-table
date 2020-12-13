@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:schulte_table/components/schulte_table.dart';
 import 'menu_item.dart';
 import '../enums/game_mode.dart';
 
