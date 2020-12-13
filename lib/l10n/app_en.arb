@@ -14,5 +14,13 @@
   "mode": "Current Mode:",
   "@mode": {
     "description": "game mode indicatior"
+  },
+  "memoryGameModeDescription": "After start you will have 3 seconds to remember location of as many numbers as you can and after that numbers will dissapear, click on the boxes in ascending order from 1 to 25.  if you click wrong box, number will appear for 3 seconds.",
+  "@memoryGameModeDescription": {
+    "description": "memory game mode description text"
+  },
+  "startGame": "Start Game",
+  "@startGame": {
+    "description": "Start Game"
   }
 }
