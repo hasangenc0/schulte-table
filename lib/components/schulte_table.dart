@@ -31,6 +31,7 @@ class SchulteTable extends StatelessWidget {
                   ],
                 ),
               )),
+              gameMode.getSchulteTable(context)
             ],
           ),
         ));
