@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:schulte_table/components/schulte_table.dart';
 import 'package:schulte_table/enums/game_mode.dart';
 import '../game/game.dart';
 import 'package:schulte_table/game/game_mode_strategy.dart';
+
+import 'mode_description.dart';
 
 class MenuItem extends StatelessWidget {
   final GameModeStrategy gameMode;
@@ -16,7 +17,7 @@ class MenuItem extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => SchulteTable(this.gameMode)),
+                builder: (context) => ModeDescription(this.gameMode)),
           );
         },
         child: Container(
