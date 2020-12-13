@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:schulte_table/components/schulte_cell.dart';
+import 'package:provider/provider.dart';
+import 'package:schulte_table/components/schulte_table.dart';
+import 'package:schulte_table/context/sculte_table_context.dart';
 import 'package:schulte_table/game/game_mode_strategy.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -10,20 +12,17 @@ class MemoryModeStrategy implements GameModeStrategy {
   String getDescriptionText(BuildContext context) =>
       AppLocalizations.of(context).memoryGameModeDescription;
 
+  void eventHandler(int cellValue, SchulteTableContext schulteTableContext) {
+    schulteTableContext.itemState =
+        SchulteTableCellState(cellValue, false, false, false);
+  }
+
   Widget getSchulteTable(BuildContext context) {
     List<int> items = GameModeStrategy.getTableCellValues();
 
-    return Container(
-        padding: const EdgeInsets.all(10),
-        height: MediaQuery.of(context).size.height * 0.7,
-        child: GridView.count(
-          mainAxisSpacing: 0,
-          crossAxisSpacing: 0,
-          childAspectRatio: 1,
-          crossAxisCount: 5,
-          children: List.generate(GameModeStrategy.CELL_COUNT, (index) {
-            return SchulteCell(items[index]);
-          }),
-        ));
+    return ChangeNotifierProvider(
+      create: (context) => SchulteTableContext(items),
+      child: SchulteTable(this, items),
+    );
   }
 }
