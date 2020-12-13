@@ -1,0 +1,1 @@
+const TABLE_ITEM_COUNT = 25;
