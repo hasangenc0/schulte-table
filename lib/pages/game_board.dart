@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:schulte_table/components/schulte_table.dart';
 import 'package:schulte_table/game/game_mode_strategy.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ModeDescription extends StatelessWidget {
+class GameBoard extends StatelessWidget {
   final GameModeStrategy gameMode;
-  ModeDescription(this.gameMode);
+  GameBoard(this.gameMode);
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +31,7 @@ class ModeDescription extends StatelessWidget {
                   ],
                 ),
               )),
-              GameModeStrategy.getDescription(
-                  gameMode.getDescriptionText(context)),
-              Container(
-                  padding: EdgeInsets.all(20),
-                  child: ElevatedButton(
-                      child: Text(AppLocalizations.of(context).startGame),
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    SchulteTable(this.gameMode)),
-                            ModalRoute.withName('/'));
-                      }))
+              gameMode.getSchulteTable(context)
             ],
           ),
         ));

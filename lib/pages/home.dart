@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'menu_item.dart';
+import '../components/menu_item.dart';
 import '../enums/game_mode.dart';
 
 class Home extends StatelessWidget {
