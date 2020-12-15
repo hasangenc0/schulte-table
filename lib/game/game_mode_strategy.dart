@@ -11,6 +11,7 @@ abstract class GameModeStrategy {
   Widget getSchulteTable(BuildContext context);
   String getDescriptionText(BuildContext context);
   void eventHandler(int cellValue, SchulteTableContext schulteTableContext);
+  void onStart(SchulteTableContext schulteTableContext);
 
   static List<int> getTableCellValues() {
     return shuffleArray(1, GameModeStrategy.CELL_COUNT);

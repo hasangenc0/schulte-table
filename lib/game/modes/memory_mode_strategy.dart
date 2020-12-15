@@ -6,6 +6,7 @@ import 'package:schulte_table/game/game_mode_strategy.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MemoryModeStrategy implements GameModeStrategy {
+  bool started = false;
   String getName(BuildContext context) =>
       AppLocalizations.of(context).memoryGameModeTitle;
 
@@ -13,8 +14,54 @@ class MemoryModeStrategy implements GameModeStrategy {
       AppLocalizations.of(context).memoryGameModeDescription;
 
   void eventHandler(int cellValue, SchulteTableContext schulteTableContext) {
-    schulteTableContext.itemState =
-        SchulteTableCellState(cellValue, false, false, false);
+    if (!started) {
+      return;
+    }
+
+    if (cellValue == 1) {
+      schulteTableContext.itemState =
+          SchulteTableCellState(cellValue, false, false, false, true);
+      schulteTableContext.nextValue = 2;
+      return;
+    }
+
+    SchulteTableCellState previousValue =
+        schulteTableContext.items[cellValue - 1];
+
+    bool shouldSelected = previousValue.popped;
+    if (shouldSelected) {
+      schulteTableContext.itemState =
+          SchulteTableCellState(cellValue, false, false, false, true);
+      schulteTableContext.nextValue = cellValue + 1;
+    }
+
+    if (!shouldSelected) {
+      schulteTableContext.itemState =
+          SchulteTableCellState(cellValue, true, true, false, false);
+
+      Future.delayed(Duration(seconds: 3), () {
+        try {
+          schulteTableContext.itemState =
+              SchulteTableCellState(cellValue, true, false, false, false);
+        } catch (Exception) {}
+      });
+    }
+  }
+
+  void onStart(SchulteTableContext schulteTableContext) {
+    schulteTableContext.items.forEach((_, cellState) {
+      schulteTableContext.itemState =
+          SchulteTableCellState(cellState.value, true, true, false, false);
+    });
+    Future.delayed(Duration(seconds: 3), () {
+      try {
+        schulteTableContext.items.forEach((_, cellState) {
+          schulteTableContext.itemState =
+              SchulteTableCellState(cellState.value, true, false, false, false);
+        });
+        started = true;
+      } catch (Exception) {}
+    });
   }
 
   Widget getSchulteTable(BuildContext context) {
