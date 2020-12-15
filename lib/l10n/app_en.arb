@@ -22,5 +22,13 @@
   "startGame": "Start Game",
   "@startGame": {
     "description": "Start Game"
+  },
+  "score": "Score",
+  "@score": {
+    "description": "Score indicator"
+  },
+  "next": "Next",
+  "@next": {
+    "description": "next indicator"
   }
 }
