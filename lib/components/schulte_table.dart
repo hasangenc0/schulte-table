@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:schulte_table/components/stopwatch.dart';
 import 'package:schulte_table/context/sculte_table_context.dart';
 import 'package:schulte_table/game/game_mode_strategy.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'schulte_cell.dart';
 
@@ -23,7 +25,24 @@ class _SchulteTableState extends State<SchulteTable> {
   @override
   Widget build(BuildContext context) {
     return Consumer<SchulteTableContext>(
-        builder: (context, schulteTableContext, _) => Container(
+        builder: (context, schulteTableContext, _) {
+      return ListView(shrinkWrap: true, children: <Widget>[
+        Container(
+          padding: const EdgeInsets.all(10),
+          child: Flex(
+              direction: Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  AppLocalizations.of(context).score +
+                      ': ' +
+                      schulteTableContext.nextValue.toString(),
+                  style: TextStyle(fontSize: 22),
+                ),
+                StopWatch(() => gameMode.onStart(schulteTableContext)),
+              ]),
+        ),
+        Container(
             padding: const EdgeInsets.all(10),
             height: MediaQuery.of(context).size.height * 0.7,
             child: GridView.count(
@@ -40,6 +59,8 @@ class _SchulteTableState extends State<SchulteTable> {
                         .gameMode
                         .eventHandler(itemValue, schulteTableContext));
               }),
-            )));
+            ))
+      ]);
+    });
   }
 }
