@@ -34,7 +34,7 @@ class _SchulteTableState extends State<SchulteTable> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  AppLocalizations.of(context).score +
+                  AppLocalizations.of(context).next +
                       ': ' +
                       schulteTableContext.nextValue.toString(),
                   style: TextStyle(fontSize: 22),
