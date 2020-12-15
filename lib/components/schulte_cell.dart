@@ -15,7 +15,7 @@ class SchulteCell extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.blueAccent,
+            color: state.visible ? Colors.blueAccent : Colors.transparent,
             border: Border(
               top: BorderSide(width: 1.0, color: Colors.white),
               left: BorderSide(width: 1.0, color: Colors.white),
@@ -25,7 +25,7 @@ class SchulteCell extends StatelessWidget {
           ),
           child: Center(
               child: Text(
-            state.visible ? value.toString() : '',
+            state.visible && state.showValue ? value.toString() : '',
             style: TextStyle(fontSize: 24),
           )),
         ));
