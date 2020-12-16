@@ -30,5 +30,17 @@
   "next": "Next",
   "@next": {
     "description": "next indicator"
+  },
+  "finished": "Finished!",
+  "@finished": {
+    "description": "finished title"
+  },
+  "scoreResult": "Your Score:",
+  "@scoreResult": {
+    "description": "score result"
+  },
+  "bestScore": "Your Best Score:",
+  "@bestScore": {
+    "description": "best score"
   }
 }
