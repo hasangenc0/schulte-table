@@ -20,4 +20,13 @@ abstract class GameModeStrategy {
   static Widget getDescription(String description) {
     return DescriptionText(description);
   }
+
+  Future<void> afterClick(SchulteTableContext schulteTableContext) async {
+    bool isGameFinished = schulteTableContext.items.entries
+        .every((element) => element.value.popped);
+
+    if (isGameFinished) {
+      schulteTableContext.finished = true;
+    }
+  }
 }

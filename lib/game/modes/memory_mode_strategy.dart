@@ -5,8 +5,7 @@ import 'package:schulte_table/context/sculte_table_context.dart';
 import 'package:schulte_table/game/game_mode_strategy.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class MemoryModeStrategy implements GameModeStrategy {
-  bool started = false;
+class MemoryModeStrategy extends GameModeStrategy {
   String getName(BuildContext context) =>
       AppLocalizations.of(context).memoryGameModeTitle;
 
@@ -14,35 +13,36 @@ class MemoryModeStrategy implements GameModeStrategy {
       AppLocalizations.of(context).memoryGameModeDescription;
 
   void eventHandler(int cellValue, SchulteTableContext schulteTableContext) {
-    if (!started) {
+    if (!schulteTableContext.started) {
       return;
     }
 
-    if (cellValue == 1) {
-      schulteTableContext.itemState =
-          SchulteTableCellState(cellValue, false, false, false, true);
-      schulteTableContext.nextValue = 2;
+    var current = schulteTableContext.items[cellValue];
+
+    if (current.inAction) {
       return;
     }
 
+    bool isFirstCell = cellValue == 1;
     SchulteTableCellState previousValue =
-        schulteTableContext.items[cellValue - 1];
+        isFirstCell ? null : schulteTableContext.items[cellValue - 1];
 
-    bool shouldSelected = previousValue.popped;
+    bool shouldSelected = isFirstCell || previousValue.popped;
     if (shouldSelected) {
       schulteTableContext.itemState =
           SchulteTableCellState(cellValue, false, false, false, true);
       schulteTableContext.nextValue = cellValue + 1;
+      this.afterClick(schulteTableContext);
     }
 
     if (!shouldSelected) {
       schulteTableContext.itemState =
-          SchulteTableCellState(cellValue, true, true, false, false);
+          SchulteTableCellState(cellValue, true, true, false, false, true);
 
       Future.delayed(Duration(seconds: 3), () {
         try {
-          schulteTableContext.itemState =
-              SchulteTableCellState(cellValue, true, false, false, false);
+          schulteTableContext.itemState = SchulteTableCellState(
+              cellValue, true, false, false, false, false);
         } catch (Exception) {}
       });
     }
@@ -59,7 +59,7 @@ class MemoryModeStrategy implements GameModeStrategy {
           schulteTableContext.itemState =
               SchulteTableCellState(cellState.value, true, false, false, false);
         });
-        started = true;
+        schulteTableContext.started = true;
       } catch (Exception) {}
     });
   }
