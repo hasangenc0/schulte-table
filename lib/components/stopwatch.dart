@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:schulte_table/context/sculte_table_context.dart';
+import 'package:schulte_table/helpers/shared_prefs_helper.dart';
 
 class StopWatch extends StatefulWidget {
   final Function onStart;
@@ -100,30 +103,42 @@ class _StopWatchState extends State<StopWatch> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          RichText(
-            text: TextSpan(
-              text: AppLocalizations.of(context).score + ': ',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.orange,
-                  fontSize: 20),
-              children: <TextSpan>[
-                TextSpan(
-                  text: "$minutesStr:$secondsStr:$mSecondsStr",
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
+    return Consumer<SchulteTableContext>(
+        builder: (context, schulteTableContext, _) {
+      if (schulteTableContext.finished) {
+        Duration score = Duration(
+            minutes: int.parse(minutesStr),
+            seconds: int.parse(secondsStr),
+            milliseconds: int.parse(mSecondsStr));
+        schulteTableContext.score = score;
+        setScore(score.inMilliseconds);
+        resetStopWatch();
+      }
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RichText(
+              text: TextSpan(
+                text: AppLocalizations.of(context).score + ': ',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.orange,
+                    fontSize: 20),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: "$minutesStr:$secondsStr:$mSecondsStr",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    });
   }
 }
