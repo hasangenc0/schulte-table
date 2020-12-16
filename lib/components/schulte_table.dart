@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:schulte_table/components/game_result.dart';
 import 'package:schulte_table/components/stopwatch.dart';
 import 'package:schulte_table/context/sculte_table_context.dart';
 import 'package:schulte_table/game/game_mode_strategy.dart';
@@ -34,9 +35,11 @@ class _SchulteTableState extends State<SchulteTable> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  AppLocalizations.of(context).next +
-                      ': ' +
-                      schulteTableContext.nextValue.toString(),
+                  !schulteTableContext.finished
+                      ? AppLocalizations.of(context).next +
+                          ': ' +
+                          schulteTableContext.nextValue.toString()
+                      : '',
                   style: TextStyle(fontSize: 22),
                 ),
                 StopWatch(() => gameMode.onStart(schulteTableContext)),
@@ -45,21 +48,26 @@ class _SchulteTableState extends State<SchulteTable> {
         Container(
             padding: const EdgeInsets.all(10),
             height: MediaQuery.of(context).size.height * 0.7,
-            child: GridView.count(
-              mainAxisSpacing: 0,
-              crossAxisSpacing: 0,
-              childAspectRatio: 1,
-              crossAxisCount: 5,
-              children: List.generate(GameModeStrategy.CELL_COUNT, (index) {
-                var itemValue = items[index];
-                return SchulteCell(
-                    itemValue,
-                    schulteTableContext.items[itemValue],
-                    () => this
-                        .gameMode
-                        .eventHandler(itemValue, schulteTableContext));
-              }),
-            ))
+            child: Builder(builder: (context) {
+              if (schulteTableContext.finished) {
+                return GameResult();
+              }
+              return GridView.count(
+                mainAxisSpacing: 0,
+                crossAxisSpacing: 0,
+                childAspectRatio: 1,
+                crossAxisCount: 5,
+                children: List.generate(GameModeStrategy.CELL_COUNT, (index) {
+                  var itemValue = items[index];
+                  return SchulteCell(
+                      itemValue,
+                      schulteTableContext.items[itemValue],
+                      () => this
+                          .gameMode
+                          .eventHandler(itemValue, schulteTableContext));
+                }),
+              );
+            }))
       ]);
     });
   }
