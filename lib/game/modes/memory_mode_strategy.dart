@@ -23,19 +23,22 @@ class MemoryModeStrategy extends GameModeStrategy {
       return;
     }
 
-    bool isFirstCell = cellValue == 1;
-    SchulteTableCellState previousValue =
-        isFirstCell ? null : schulteTableContext.items[cellValue - 1];
-
-    bool shouldSelected = isFirstCell || previousValue.popped;
+    bool shouldSelected = cellValue == schulteTableContext.nextValue;
     if (shouldSelected) {
       schulteTableContext.itemState =
-          SchulteTableCellState(cellValue, false, false, false, true);
+          SchulteTableCellState(cellValue, false, false, true, true);
       schulteTableContext.nextValue = cellValue + 1;
       this.afterClick(schulteTableContext);
+      Future.delayed(Duration(milliseconds: 400), () {
+        try {
+          schulteTableContext.itemState =
+              SchulteTableCellState(cellValue, false, false, false, true);
+        } catch (Exception) {}
+      });
+      return;
     }
 
-    if (!shouldSelected) {
+    if (!shouldSelected && !schulteTableContext.items[cellValue].popped) {
       schulteTableContext.itemState =
           SchulteTableCellState(cellValue, true, true, false, false, true);
 
