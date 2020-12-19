@@ -7,25 +7,34 @@ class SchulteCell extends StatelessWidget {
   final void Function() onTapToCell;
   SchulteCell(this.value, this.state, this.onTapToCell);
 
+  Color getColor() {
+    if (state.focused) {
+      return Colors.redAccent;
+    }
+    return state.visible ? Colors.blueAccent : Colors.transparent;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          this.onTapToCell();
-        },
+        onTap: onTapToCell,
         child: Container(
           decoration: BoxDecoration(
-            color: state.visible ? Colors.blueAccent : Colors.transparent,
-            border: Border(
-              top: BorderSide(width: 1.0, color: Colors.white),
-              left: BorderSide(width: 1.0, color: Colors.white),
-              right: BorderSide(width: 1.0, color: Colors.black),
-              bottom: BorderSide(width: 1.0, color: Colors.black),
-            ),
+            color: getColor(),
+            border: state.visible
+                ? Border(
+                    top: BorderSide(width: 1.0, color: Colors.white),
+                    left: BorderSide(width: 1.0, color: Colors.white),
+                    right: BorderSide(width: 1.0, color: Colors.lightBlue),
+                    bottom: BorderSide(width: 1.0, color: Colors.lightBlue),
+                  )
+                : null,
           ),
           child: Center(
               child: Text(
-            state.visible && state.showValue ? value.toString() : '',
+            ((state.visible && state.showValue) || state.focused)
+                ? value.toString()
+                : '',
             style: TextStyle(fontSize: 24),
           )),
         ));
