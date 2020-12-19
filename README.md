@@ -8,6 +8,10 @@ The Schulte Table was developed originally as a psycho-diagnostic test to study 
 </i>
 <p>
 
+# How To Run
+```
+flutter run
+```
 
 # Authors
 [**Hasan Genc**](https://github.com/hasangenc0/)
